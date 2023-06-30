@@ -15,6 +15,7 @@ from pytorch_lightning.trainer import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, Callback, LearningRateMonitor, BaseFinetuning
 from pytorch_lightning.utilities.distributed import rank_zero_only
 from pytorch_lightning.utilities import rank_zero_info
+from datetime import datetime
 
 from ldm.data.base import Txt2ImgIterableBaseDataset
 from ldm.util import instantiate_from_config
@@ -429,7 +430,7 @@ class CUDACallback(Callback):
 
 if __name__ == "__main__":
 
-    now ="2023-02-08" # FIXED TO AVOID WASTING SPACE
+    now = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     # add cwd for convenience and to make classes in this file available when
     # running as `python main.py`
@@ -662,7 +663,7 @@ if __name__ == "__main__":
         # configure learning rate
         bs, base_lr = config.data.params.batch_size, config.model.base_learning_rate
         if not cpu:
-            ngpu = len(lightning_config.trainer.gpus.strip(",").split(','))
+            ngpu = 1
         else:
             ngpu = 1
         if 'accumulate_grad_batches' in lightning_config.trainer:

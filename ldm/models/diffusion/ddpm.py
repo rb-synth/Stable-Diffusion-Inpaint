@@ -15,7 +15,7 @@ from einops import rearrange, repeat
 from contextlib import contextmanager
 import contextlib
 from functools import partial
-from tqdm import tqdm
+from tqdm.auto import tqdm
 from torchvision.utils import make_grid
 from pytorch_lightning.utilities.distributed import rank_zero_only
 from ldm.util import log_txt_as_img, exists, default, ismap, isimage, mean_flat, count_params, instantiate_from_config
@@ -1266,13 +1266,13 @@ class LatentDiffusion(DDPM):
                 # with self.ema_scope():
             # if not custom:
             shape = (self.channels, self.image_size, self.image_size)
-            samples, intermediates = ddim_sampler.sample(ddim_steps,batch_size,
+            samples, intermediates, _ = ddim_sampler.sample(ddim_steps,batch_size,
                                                             shape,cond,verbose=False,**kwargs)
                 # torch.save(self.state_dict(), "/data01/lorenzo.stacchio/TU GRAZ/Stable_Diffusion_Inpaiting/stable-diffusion_custom_inpaint/test.pth")
           
         else:
-            samples, intermediates = self.sample(cond=cond, batch_size=batch_size,
-                                                 return_intermediates=True,**kwargs)
+            samples, intermediates, _ = self.sample(cond=cond, batch_size=batch_size,
+                                                    return_intermediates=True,**kwargs)
 
         return samples, intermediates
 

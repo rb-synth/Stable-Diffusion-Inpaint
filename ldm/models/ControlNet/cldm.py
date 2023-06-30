@@ -485,7 +485,7 @@ class ControlLDMInPaintConcat(LatentDiffusion):
         # b, c, h, w = cond.shape
         # shape = (self.channels, h // 8, w // 8)
         shape = (self.channels, self.image_size, self.image_size)
-        samples, intermediates = ddim_sampler.sample(ddim_steps, batch_size, shape, cond, verbose=False, **kwargs)
+        samples, intermediates, _ = ddim_sampler.sample(ddim_steps, batch_size, shape, cond, verbose=False, **kwargs)
         return samples, intermediates
 
 
